@@ -1,45 +1,39 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { } from "react";
+import {View, StyleSheet, Image} from "react-native";
+import { scale, verticalScale } from "react-native-size-matters";
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+const Inicio = () =>{
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  return(
+    <View style={estilos.contPrin}>
+      <View style={estilos.contA}>
+        <Image
+          source={require('./frontend/image/A.png')}
+          style={estilos.imgA}
+        />
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+      </View>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
+export default Inicio;
+const estilos = StyleSheet.create({
+  contPrin:{
     flex: 1,
+    backgroundColor: '#87D1EE',
   },
-});
-
-export default App;
+    contA:{
+    flex: 1,
+    backgroundColor: '#87D1EE',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imgA:{
+    width: scale(60),
+    height: verticalScale(60),
+    resizeMode: 'contain',
+    transform: [{rotate: '-50deg'}]
+  }
+})
