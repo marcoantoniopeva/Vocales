@@ -4,76 +4,106 @@ import { scale, verticalScale } from "react-native-size-matters";
 
 const Inicio = ({ navigation }) => {
   const animacionA = useRef(new Animated.Value(0)).current;
+  const animacionE = useRef(new Animated.Value(0)).current;
+  const animacionI = useRef(new Animated.Value(0)).current;
+  const animacionO = useRef(new Animated.Value(0)).current;
+  const animacionU = useRef(new Animated.Value(0)).current;
+  const latidoPlay = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    Animated.timing(animacionA, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
+//Efecto cascada
+    Animated.stagger(200, [
+      Animated.timing(animacionA, { toValue: 1, duration: 1000, useNativeDriver: true }),
+      Animated.timing(animacionE, { toValue: 1, duration: 1000, useNativeDriver: true }),
+      Animated.timing(animacionI, { toValue: 1, duration: 1000, useNativeDriver: true }),
+      Animated.timing(animacionO, { toValue: 1, duration: 1000, useNativeDriver: true }),
+      Animated.timing(animacionU, { toValue: 1, duration: 1000, useNativeDriver: true }),
+    ]).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(latidoPlay,{
+          toValue: 1.15,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(latidoPlay, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        })
+      ])
+    ).start();
   }, []);
 
-  const translateY_A = animacionA.interpolate({
-    inputRange: [0, 1],
-    outputRange: [200, 0],
-  });
 
-  const rotate_A = animacionA.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '-60deg'],
-  });
+  // LETRA A 
+  const translateY_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
+  const rotate_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '-60deg'] });
+  const opacity_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
 
-  const opacity_A = animacionA.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
+  //  LETRA E 
+  const translateY_E = animacionE.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
+  const rotate_E = animacionE.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '-35deg'] });
+  const opacity_E = animacionE.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
+
+  //  LETRA I 
+  const translateY_I = animacionI.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
+  const rotate_I = animacionI.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '0deg'] });
+  const opacity_I = animacionI.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
+
+  //  LETRA O 
+  const translateY_O = animacionO.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
+  const rotate_O = animacionO.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '35deg'] });
+  const opacity_O = animacionO.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
+
+  //  LETRA U 
+  const translateY_U = animacionU.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
+  const rotate_U = animacionU.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '60deg'] });
+  const opacity_U = animacionU.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
 
   return (
     <View style={estilos.contPrin}>
       <View style={estilos.contVoc}>
+        
         <Animated.Image
           source={require('./frontend/image/A.png')}
-          style={[
-            estilos.vocBase,
-            estilos.posA,
-            {
-              opacity: opacity_A,
-              transform: [
-                { translateY: translateY_A },
-                { rotate: rotate_A },
-              ]
-            }
-          ]}
+          style={[ estilos.vocBase, estilos.posA, { opacity: opacity_A, transform: [{ translateY: translateY_A }, { rotate: rotate_A }] } ]}
         />
 
-        <Image
+        <Animated.Image
           source={require('./frontend/image/E.png')}
-          style={[estilos.vocBase, estilos.posicionE]}
+          style={[ estilos.vocBase, estilos.posicionE, { opacity: opacity_E, transform: [{ translateY: translateY_E }, { rotate: rotate_E }] } ]}
         />
         
-        <Image
+        <Animated.Image
           source={require('./frontend/image/I1.png')}
-          style={[estilos.vocBase, estilos.posicionI]}
+          style={[ estilos.vocBase, estilos.posicionI, { opacity: opacity_I, transform: [{ translateY: translateY_I }, { rotate: rotate_I }] } ]}
         />
-
+      <Animated.View
+      style={[estilos.contPlay, estilos.Play, 
+      { transform: [{ scale: latidoPlay }] }
+      ]}>
         <TouchableOpacity
-          style={[estilos.contPlay, estilos.Play]}
+          style={{ width: '100%', height: '100%' }}
           onPress={() => navigation.navigate('Menu')}> 
           <Image
             source={require('./frontend/image/Play.png')}
             style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
           />
         </TouchableOpacity>
+        </Animated.View>
 
-        <Image
+        <Animated.Image
           source={require('./frontend/image/O.png')}
-          style={[estilos.vocBase, estilos.posicionO]}
+          style={[ estilos.vocBase, estilos.posicionO, { opacity: opacity_O, transform: [{ translateY: translateY_O }, { rotate: rotate_O }] } ]}
         />
         
-        <Image
+        <Animated.Image
           source={require('./frontend/image/U.png')}
-          style={[estilos.vocBase, estilos.posicionU]}
+          style={[ estilos.vocBase, estilos.posicionU, { opacity: opacity_U, transform: [{ translateY: translateY_U }, { rotate: rotate_U }] } ]}
         />
+
       </View>
     </View>
   );
@@ -104,22 +134,19 @@ const estilos = StyleSheet.create({
   posicionE: {
     top: '25%',
     left: '27%',
-    transform: [{ rotate: '-35deg' }]
   },
   posicionI: {
     top: '15%',
     left: '45%',
-    transform: [{ rotate: '0deg' }]
+    
   },
   posicionO: {
     top: '25%',
     right: '27%',
-    transform: [{ rotate: '35deg' }]
   },
   posicionU: {
     top: '62%',
     right: '17%',
-    transform: [{ rotate: '60deg' }]
   },
   contPlay: {
     width: scale(80),
@@ -127,7 +154,7 @@ const estilos = StyleSheet.create({
     position: 'absolute'
   },
   Play: {
-    top: '60%',
-    left: '44%',
+    top: '54%',
+    left: '43%',
   },
 });
