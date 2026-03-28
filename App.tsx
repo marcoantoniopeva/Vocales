@@ -28,6 +28,7 @@ const Inicio = ({ irAMenu }) => {
       Animated.timing(animacionU, { toValue: 1, duration: 1000, useNativeDriver: true }),
     ]).start();
 
+    //*******efecto latido **********
     Animated.loop(
       Animated.sequence([
         Animated.timing(latidoPlay,{
@@ -185,11 +186,11 @@ export default function App() {
 const estilos = StyleSheet.create({
   contPrin: {
     flex: 1,
-    backgroundColor: '#f1c9f5',
+    backgroundColor: '#ee12d150',
   },
   contVoc: {
     flex: 1,
-    backgroundColor: '#f1c9f5',
+    backgroundColor: 'transparent',
     position: 'relative'
   },
   vocBase: {

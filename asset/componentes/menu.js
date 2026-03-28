@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Animated } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 
-const Menu = ({navigation}) => {
+const Menu = () => {
 const DIAMETRO_CIRCULO = moderateScale(110);
 const COLOR_BORDE = '#3151A5';
  return (
