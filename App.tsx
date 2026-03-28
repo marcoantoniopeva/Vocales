@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Animated } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, StyleSheet, Image, TouchableOpacity, Animated,Easing } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
+import Menu from './asset/componentes/menu';
 
-const Inicio = ({ navigation }) => {
+const Inicio = ({ irAMenu }) => {
   const animacionA = useRef(new Animated.Value(0)).current;
   const animacionE = useRef(new Animated.Value(0)).current;
   const animacionI = useRef(new Animated.Value(0)).current;
@@ -10,8 +11,15 @@ const Inicio = ({ navigation }) => {
   const animacionU = useRef(new Animated.Value(0)).current;
   const latidoPlay = useRef(new Animated.Value(1)).current;
 
+  const animacionAvion = useRef(new Animated.Value(0)).current;
+  const animacionEstrella = useRef(new Animated.Value(0)).current;
+  const animacionIglu = useRef(new Animated.Value(0)).current;
+  const animacionCaraOso = useRef(new Animated.Value(-1)).current;
+  const animacionUvas = useRef(new Animated.Value(1)).current;
+ 
+
   useEffect(() => {
-//Efecto cascada
+    // Efecto cascada
     Animated.stagger(200, [
       Animated.timing(animacionA, { toValue: 1, duration: 1000, useNativeDriver: true }),
       Animated.timing(animacionE, { toValue: 1, duration: 1000, useNativeDriver: true }),
@@ -34,96 +42,165 @@ const Inicio = ({ navigation }) => {
         })
       ])
     ).start();
-  }, []);
 
+    // ********animacion del Avion***********
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animacionAvion, { toValue: 1, duration: 3000, easing: Easing.linear, useNativeDriver: true }),
+        Animated.timing(animacionAvion, { toValue: -1, duration: 6000, easing: Easing.linear, useNativeDriver: true }), 
+        Animated.timing(animacionAvion, { toValue: 0, duration: 3000, easing: Easing.linear, useNativeDriver: true }), 
+      ])
+    ).start();
+
+    //**************animacion de estrella ****************
+    Animated.loop(
+      Animated.timing(animacionEstrella, { toValue: 1, duration: 4000, easing: Easing.linear, useNativeDriver: true }) 
+    ).start();
+
+//************** animacion iglu***********************
+   Animated.loop(
+      Animated.sequence([
+        Animated.timing(animacionIglu, { toValue: 1, duration: 2500, useNativeDriver: true }),
+        Animated.timing(animacionIglu, { toValue: -1, duration: 2500, useNativeDriver: true }), 
+      ])
+    ).start(); 
+
+    //******************animacion cara oso **********************
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animacionCaraOso, { toValue: 1, duration: 150, useNativeDriver: true }), 
+        Animated.timing(animacionCaraOso, { toValue: -1, duration: 150, useNativeDriver: true }), 
+      ])
+    ).start();
+
+    //****************animacion uvas **********************
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animacionUvas, { toValue: 1.05, duration: 1200, useNativeDriver: true }), // Crece sutilmente
+        Animated.timing(animacionUvas, { toValue: 1, duration: 1200, useNativeDriver: true }), // Vuelve a su tamaño normal
+      ])
+    ).start();
+  }, []);
 
   // LETRA A 
   const translateY_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
   const rotate_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '-60deg'] });
   const opacity_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
 
-  //  LETRA E 
+  // LETRA E 
   const translateY_E = animacionE.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
   const rotate_E = animacionE.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '-35deg'] });
   const opacity_E = animacionE.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
 
-  //  LETRA I 
+  // LETRA I 
   const translateY_I = animacionI.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
   const rotate_I = animacionI.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '0deg'] });
   const opacity_I = animacionI.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
 
-  //  LETRA O 
+  // LETRA O 
   const translateY_O = animacionO.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
   const rotate_O = animacionO.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '35deg'] });
   const opacity_O = animacionO.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
 
-  //  LETRA U 
+  // LETRA U 
   const translateY_U = animacionU.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
   const rotate_U = animacionU.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '60deg'] });
   const opacity_U = animacionU.interpolate({ inputRange: [0, 1], outputRange: [0, 1] });
+
+
+  // Avion mueve horizontal
+  const translateX_Avion = animacionAvion.interpolate({
+    inputRange: [-1, 0, 1],
+    outputRange: [scale(-15), 0, scale(15)] 
+  });
+
+  //Estrella gira
+  const rotate_Estrella = animacionEstrella.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'] 
+  });
+
+  // Iglu mueve vertical
+  const translateY_Iglu = animacionIglu.interpolate({
+    inputRange: [-1, 1],
+    outputRange: [verticalScale(-5), verticalScale(5)]
+  });
+
+  // Cara oso mueve
+  const rotate_CaraOso = animacionCaraOso.interpolate({
+    inputRange: [-1, 1],
+    outputRange: ['-10deg', '10deg'] 
+  });
+
 
   return (
     <View style={estilos.contPrin}>
       <View style={estilos.contVoc}>
         
-        <Animated.Image
-          source={require('./frontend/image/A.png')}
-          style={[ estilos.vocBase, estilos.posA, { opacity: opacity_A, transform: [{ translateY: translateY_A }, { rotate: rotate_A }] } ]}
-        />
+        <Animated.Image source={require('./frontend/image/A.png')} style={[ estilos.vocBase, estilos.posA, { opacity: opacity_A, transform: [{ translateY: translateY_A }, { rotate: rotate_A }] } ]} />
+        <Animated.Image source={require('./frontend/image/Avion.png')} style={[ estilos.objBase, estilos.posAvion, { transform: [{ translateX: translateX_Avion }] } ]} />
 
-        <Animated.Image
-          source={require('./frontend/image/E.png')}
-          style={[ estilos.vocBase, estilos.posicionE, { opacity: opacity_E, transform: [{ translateY: translateY_E }, { rotate: rotate_E }] } ]}
-        />
+        <Animated.Image source={require('./frontend/image/E.png')} style={[ estilos.vocBase, estilos.posicionE, { opacity: opacity_E, transform: [{ translateY: translateY_E }, { rotate: rotate_E }] } ]} />
+        <Animated.Image source={require('./frontend/image/Estrella.png')} style={[ estilos.objBase, estilos.posEstrella, { transform: [{ rotate: rotate_Estrella }] } ]} />        
         
-        <Animated.Image
-          source={require('./frontend/image/I1.png')}
-          style={[ estilos.vocBase, estilos.posicionI, { opacity: opacity_I, transform: [{ translateY: translateY_I }, { rotate: rotate_I }] } ]}
-        />
-      <Animated.View
-      style={[estilos.contPlay, estilos.Play, 
-      { transform: [{ scale: latidoPlay }] }
-      ]}>
-        <TouchableOpacity
-          style={{ width: '100%', height: '100%' }}
-          onPress={() => navigation.navigate('Menu')}> 
-          <Image
-            source={require('./frontend/image/Play.png')}
-            style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
-          />
-        </TouchableOpacity>
+        <Animated.Image source={require('./frontend/image/I1.png')} style={[ estilos.vocBase, estilos.posicionI, { opacity: opacity_I, transform: [{ translateY: translateY_I }, { rotate: rotate_I }] } ]} />
+        <Animated.Image source={require('./frontend/image/Iglu.png')} style={[ estilos.objBase, estilos.posicionIglu, { transform: [{ translateY: translateY_Iglu }] } ]} />
+
+        <Animated.View style={[estilos.contPlay, estilos.Play, { transform: [{ scale: latidoPlay }] }]}>
+          <TouchableOpacity
+            style={{ width: '100%', height: '100%' }}
+            onPress={irAMenu}> 
+            <Image
+              source={require('./frontend/image/Play.png')}
+              style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
+            />
+          </TouchableOpacity>
         </Animated.View>
 
-        <Animated.Image
-          source={require('./frontend/image/O.png')}
-          style={[ estilos.vocBase, estilos.posicionO, { opacity: opacity_O, transform: [{ translateY: translateY_O }, { rotate: rotate_O }] } ]}
-        />
-        
-        <Animated.Image
-          source={require('./frontend/image/U.png')}
-          style={[ estilos.vocBase, estilos.posicionU, { opacity: opacity_U, transform: [{ translateY: translateY_U }, { rotate: rotate_U }] } ]}
-        />
+        <Animated.Image source={require('./frontend/image/O.png')} style={[ estilos.vocBase, estilos.posicionO, { opacity: opacity_O, transform: [{ translateY: translateY_O }, { rotate: rotate_O }] } ]} />
+        <Animated.Image source={require('./frontend/image/Cara_Oso1.png')} style={[ estilos.objBase, estilos.posicionCara_Oso, { transform: [{ rotate: rotate_CaraOso }] } ]} />
+
+        <Animated.Image source={require('./frontend/image/U.png')} style={[ estilos.vocBase, estilos.posicionU, { opacity: opacity_U, transform: [{ translateY: translateY_U }, { rotate: rotate_U }] } ]} />
+        <Animated.Image source={require('./frontend/image/Uvas.png')} style={[ estilos.objBase, estilos.posicionUvas, { transform: [{ scale: animacionUvas }] } ]} />
 
       </View>
     </View>
   );
 };
 
-export default Inicio;
+export default function App() {
+  const [pantallaActual, setPantallaActual] = useState('Inicio');
+
+  if (pantallaActual === 'Menu') {
+    return (
+      <Menu /> 
+    );
+  }
+
+  return (
+    <Inicio irAMenu={() => setPantallaActual('Menu')} />
+  );
+}
 
 const estilos = StyleSheet.create({
   contPrin: {
     flex: 1,
-    backgroundColor: '#ae56b6',
+    backgroundColor: '#f1c9f5',
   },
   contVoc: {
     flex: 1,
-    backgroundColor: '#ae56b6',
+    backgroundColor: '#f1c9f5',
     position: 'relative'
   },
   vocBase: {
-    width: scale(55),
-    height: verticalScale(55),
+    width: scale(65),
+    height: verticalScale(65),
+    resizeMode: 'contain',
+    position: 'absolute'
+  },
+  objBase: {
+    width: scale(60),
+    height: verticalScale(60),
     resizeMode: 'contain',
     position: 'absolute'
   },
@@ -131,12 +208,25 @@ const estilos = StyleSheet.create({
     top: '60%',
     left: '15%',
   },
+    posAvion: {
+    top: '70%',
+    left: '25%',
+  },
   posicionE: {
     top: '25%',
     left: '27%',
   },
+    posEstrella: {
+    top: '12%',
+    left: '22%',
+  },
   posicionI: {
-    top: '15%',
+    top: '8%',
+    left: '45%',
+    
+  },
+    posicionIglu: {
+    top: '28%',
     left: '45%',
     
   },
@@ -144,17 +234,25 @@ const estilos = StyleSheet.create({
     top: '25%',
     right: '27%',
   },
+    posicionCara_Oso: {
+    top: '9%',
+    right: '24%',
+  },
   posicionU: {
     top: '62%',
     right: '17%',
   },
+    posicionUvas: {
+    top: '68%',
+    right: '27%',
+  },
   contPlay: {
-    width: scale(80),
-    height: verticalScale(80),
+    width: scale(90),
+    height: verticalScale(90),
     position: 'absolute'
   },
   Play: {
-    top: '54%',
+    top: '48%',
     left: '43%',
   },
 });
