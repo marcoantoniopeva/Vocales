@@ -175,7 +175,7 @@ Animated.loop(
         <Animated.View style={[estilos.contPlay, estilos.circulo,{ transform: [{ translateX: animVibrar}] }]}>
           <TouchableOpacity
             style={estilos.touchable}
-             onPress={() => setPantalla('trazos')}> 
+             onPress={() => setPantalla('unir')}> 
             <Image
               source={require('../../frontend/image/Ojo.png')}
               style={estilos.img} 
@@ -221,7 +221,7 @@ Animated.loop(
         <Animated.View style={[estilos.contPlay,estilos.circulo, { transform: [{ translateX: animVibrar }] }]}>
           <TouchableOpacity
             style={estilos.touchable}
-           onPress={() => setPantalla('unir')}> 
+           onPress={() => setPantalla('trazos')}> 
             <Image
               source={require('../../frontend/image/Mano.png')}
               style={estilos.img}
