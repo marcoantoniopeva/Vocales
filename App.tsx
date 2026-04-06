@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+<<<<<<< HEAD
 import { View, StyleSheet, Image, TouchableOpacity, Animated ,Easing } from "react-native";
+=======
+import { View, StyleSheet, Image, TouchableOpacity, Animated, Easing } from "react-native";
+>>>>>>> 919c98e55b5a78574fcd93a945b8f384b6af7add
 import { scale, verticalScale } from "react-native-size-matters";
 import Menu from './asset/componentes/menu';
 
@@ -43,7 +47,12 @@ const Inicio = ({ irAMenu }) => {
         })
       ])
     ).start();
+<<<<<<< HEAD
      // ********animacion del Avion***********
+=======
+
+    // ********animacion del Avion***********
+>>>>>>> 919c98e55b5a78574fcd93a945b8f384b6af7add
     Animated.loop(
       Animated.sequence([
         Animated.timing(animacionAvion, { toValue: 1, duration: 3000, easing: Easing.linear, useNativeDriver: true }),
@@ -136,9 +145,13 @@ const Inicio = ({ irAMenu }) => {
      <View style={estilos.contPrin}>
       <View style={estilos.contVoc}>
         
+<<<<<<< HEAD
     <Animated.Image source={require('./frontend/image/A.png')} style={[ estilos.vocBase, estilos.posA, { opacity: opacity_A, transform: [{ translateY: translateY_A }, { rotate: rotate_A }] } ]} />
         <Animated.Image source={require('./frontend/image/E.png')} style={[ estilos.vocBase, estilos.posicionE, { opacity: opacity_E, transform: [{ translateY: translateY_E }, { rotate: rotate_E }] } ]} />
         <Animated.Image source={require('./frontend/image/I1.png')} style={[ estilos.vocBase, estilos.posicionI, { opacity: opacity_I, transform: [{ translateY: translateY_I }, { rotate: rotate_I }] } ]} />
+=======
+        <Animated.Image source={require('./frontend/image/A.png')} style={[ estilos.vocBase, estilos.posA, { opacity: opacity_A, transform: [{ translateY: translateY_A }, { rotate: rotate_A }] } ]} />
+>>>>>>> 919c98e55b5a78574fcd93a945b8f384b6af7add
         <Animated.Image source={require('./frontend/image/Avion.png')} style={[ estilos.objBase, estilos.posAvion, { transform: [{ translateX: translateX_Avion }] } ]} />
 
         <Animated.Image source={require('./frontend/image/E.png')} style={[ estilos.vocBase, estilos.posicionE, { opacity: opacity_E, transform: [{ translateY: translateY_E }, { rotate: rotate_E }] } ]} />
@@ -159,12 +172,19 @@ const Inicio = ({ irAMenu }) => {
         </Animated.View>
 
         <Animated.Image source={require('./frontend/image/O.png')} style={[ estilos.vocBase, estilos.posicionO, { opacity: opacity_O, transform: [{ translateY: translateY_O }, { rotate: rotate_O }] } ]} />
+<<<<<<< HEAD
 
         <Animated.Image source={require('./frontend/image/U.png')} style={[ estilos.vocBase, estilos.posicionU, { opacity: opacity_U, transform: [{ translateY: translateY_U }, { rotate: rotate_U }] } ]} />
+=======
+>>>>>>> 919c98e55b5a78574fcd93a945b8f384b6af7add
         <Animated.Image source={require('./frontend/image/Cara_Oso1.png')} style={[ estilos.objBase, estilos.posicionCara_Oso, { transform: [{ rotate: rotate_CaraOso }] } ]} />
 
         <Animated.Image source={require('./frontend/image/U.png')} style={[ estilos.vocBase, estilos.posicionU, { opacity: opacity_U, transform: [{ translateY: translateY_U }, { rotate: rotate_U }] } ]} />
         <Animated.Image source={require('./frontend/image/Uvas.png')} style={[ estilos.objBase, estilos.posicionUvas, { transform: [{ scale: animacionUvas }] } ]} />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 919c98e55b5a78574fcd93a945b8f384b6af7add
       </View>
     </View>
   );
@@ -175,7 +195,11 @@ export default function App() {
 
   if (pantallaActual === 'Menu') {
     return (
+<<<<<<< HEAD
     <Menu irAInicio={() => setPantallaActual('Inicio')} />
+=======
+      <Menu irAInicio={() => setPantallaActual('Inicio')}/> 
+>>>>>>> 919c98e55b5a78574fcd93a945b8f384b6af7add
     );
   }
 
@@ -187,11 +211,19 @@ export default function App() {
 const estilos = StyleSheet.create({
   contPrin: {
     flex: 1,
+<<<<<<< HEAD
     backgroundColor: '#f1c9f5',
   },
   contVoc: {
     flex: 1,
     backgroundColor: '#f1c9f5',
+=======
+    backgroundColor: '#ee12d150',
+  },
+  contVoc: {
+    flex: 1,
+    backgroundColor: 'transparent',
+>>>>>>> 919c98e55b5a78574fcd93a945b8f384b6af7add
     position: 'relative'
   },
   vocBase: {
