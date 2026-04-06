@@ -1,37 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Image, Animated } from "react-native";
-import TrazoAComponent from './trazo_a'; 
-import TrazoEComponent from './trazo_E';
-import TrazoE1Component from './trazo_e1';
-import TrazoIComponent from './trazo_I';
-import TrazoI1Component from './trazo_i1';
-import TrazoOComponent from './trazo_O';
-import TrazoO1Component from './trazo_o1';
-import TrazoUComponent from './trazo_U';
-import TrazoU1Component from './trazo_u1';
 
+const TrazoA = ({ regresar, siguiente }) => {
 
-
-const TrazosComponent = ({ regresar }) => {
-  const [mostrarTrazoA, setMostrarTrazoA] = useState(false);
-  const [mostrarTrazoE, setMostrarTrazoE] = useState(false);
-  const [mostrarTrazoE1, setMostrarTrazoE1] = useState(false);
-  const [mostrarTrazoI, setMostrarTrazoI] = useState(false);
-  const [mostrarTrazoI1, setMostrarTrazoI1] = useState(false);
-  const [mostrarTrazoO, setMostrarTrazoO] = useState(false);
-const [mostrarTrazoO1, setMostrarTrazoO1] = useState(false);
-const [mostrarTrazoU, setMostrarTrazoU] = useState(false);
-const [mostrarTrazoU1, setMostrarTrazoU1] = useState(false);
-
-
-
-
+  //******** Animaciones de Brillo y Giro **********
   const animBrilloRef = useRef(new Animated.Value(0));
   const animBrillo = animBrilloRef.current;
   
   const animLapizGiroRef = useRef(new Animated.Value(0));
   const animLapizGiro = animLapizGiroRef.current;
 
+  // ✨ NUEVA ANIMACIÓN: El progreso del trazo (de 0 a 100) ✨
   const animProgresoTrazo = useRef(new Animated.Value(0)).current;
 
   const escalaBrillo = animBrillo.interpolate({
@@ -48,14 +27,18 @@ const [mostrarTrazoU1, setMostrarTrazoU1] = useState(false);
     inputRange: [0, 1],
     outputRange: ['-15deg', '15deg'],
   });
-const moverX = animProgresoTrazo.interpolate({
-    inputRange:  [0,  33,  34,  66,  67,  100], 
-    outputRange: [0, -30, +50, +80, -10, +60]
+
+  //******** RUTA DEL LÁPIZ PARA LA LETRA "A" **********
+  // Piensa en esto como un mapa. El lápiz viaja del paso 0 al 100.
+  const moverX = animProgresoTrazo.interpolate({
+    inputRange:  [0,  15,  30,  45, 60,  70,  75,  80, 100], 
+    //            Inicio |  Círculo izquierdo  | Salto | Línea vertical abajo
+    outputRange: [0, -30, -80, -20,  0,   0,  15,  15,  15] 
   });
 
   const moverY = animProgresoTrazo.interpolate({
-    inputRange:  [0,  33,  34,  66,  67,  100],
-    outputRange: [0, +180, 0, +180, +135, +135]
+    inputRange:  [0,  15,  30,  45, 60,  70,  75,  80, 100],
+    outputRange: [0,  15,  50,  90, 85,   0, -10, -10,  95] 
   });
 
   useEffect(() => {
@@ -63,8 +46,7 @@ const moverX = animProgresoTrazo.interpolate({
 animProgresoTrazo.setValue(0);
 animBrillo.setValue(0);
 animLapizGiro.setValue(0);
-
-
+    //******** Animacion de Brillo **********
     const animacionBrillo = Animated.loop(
       Animated.sequence([
         Animated.timing(animBrillo, { toValue: 1, duration: 1000, useNativeDriver: true }),
@@ -72,6 +54,7 @@ animLapizGiro.setValue(0);
       ])
     );
 
+    //******** Animacion del Lápiz (Giro) **********
     const animacionLapiz = Animated.loop(
       Animated.sequence([
         Animated.timing(animLapizGiro, { toValue: 1, duration: 300, useNativeDriver: true }),
@@ -79,21 +62,15 @@ animLapizGiro.setValue(0);
       ])
     );
 
-     const animacionDibujo = Animated.loop(
+    //******** Animacion del Trazo (Movimiento en la ruta) **********
+    const animacionDibujo = Animated.loop(
       Animated.sequence([
-        Animated.timing(animProgresoTrazo, { 
-          toValue: 100, 
-          duration: 6000,  
-          useNativeDriver: true 
-        }),
-        Animated.delay(500), 
-        Animated.timing(animProgresoTrazo, { 
-          toValue: 0, 
-          duration: 0,  
-          useNativeDriver: true 
-        })
+        Animated.timing(animProgresoTrazo, { toValue: 100, duration: 3500, useNativeDriver: true }), // Tarda 3.5 segundos en dibujar
+        Animated.delay(500), // Pausa medio segundo al terminar
+        Animated.timing(animProgresoTrazo, { toValue: 0, duration: 0, useNativeDriver: true }) // Regresa al inicio al instante (invisible)
       ])
     );
+
     animacionBrillo.start();
     animacionLapiz.start();
     animacionDibujo.start();
@@ -105,66 +82,10 @@ animLapizGiro.setValue(0);
     };
   }, []);
 
-  if (mostrarTrazoU1) {
-  return <TrazoU1Component 
-    regresar={() => setMostrarTrazoU1(false)}
-  />;
-}
-
-  if (mostrarTrazoU) {
-  return <TrazoUComponent 
-    regresar={() => setMostrarTrazoU(false)}
-    siguiente={() => setMostrarTrazoU1(true)} 
-
-  />;
-}
-
-  if (mostrarTrazoO1) {
-  return <TrazoO1Component 
-    regresar={() => setMostrarTrazoO1(false)}
- siguiente={() => setMostrarTrazoU(true)} 
-  />;
-}
-
- if (mostrarTrazoO) {
-  return <TrazoOComponent 
-    regresar={() => setMostrarTrazoO(false)}
-     siguiente={() => setMostrarTrazoO1(true)} 
-  />;
-}
-
-  if (mostrarTrazoI1) {
-  return <TrazoI1Component 
-    regresar={() => setMostrarTrazoI1(false)}
-    siguiente={() => setMostrarTrazoO(true)} 
-  />;
-}
-
-if (mostrarTrazoI) {
-    return <TrazoIComponent 
-        regresar={() => setMostrarTrazoI(false)}
-         siguiente={() => setMostrarTrazoI1(true)} />;
-
-}
-  if (mostrarTrazoE1) {
-    return <TrazoE1Component 
-        regresar={() => setMostrarTrazoE1(false)}
-        siguiente={() => setMostrarTrazoI(true)} />;
-  }
-
-  if (mostrarTrazoE) {
-    return <TrazoEComponent 
-    regresar={() => setMostrarTrazoE(false)}
-    siguiente={() => setMostrarTrazoE1(true)} />;
-  }
-  if (mostrarTrazoA) {
-    return <TrazoAComponent 
-    regresar={() => setMostrarTrazoA(false)}
-    siguiente={() => setMostrarTrazoE(true)}/>;
-  }
-
   return (
     <View style={estilos.container}>
+      
+      {/********* Boton Izquierda (Regresar) **********/}
       <TouchableOpacity 
         style={estilos.botonFlecha}
         onPress={regresar}
@@ -174,23 +95,32 @@ if (mostrarTrazoI) {
           style={estilos.flecha} 
         />
       </TouchableOpacity>
+
+      {/********* Contenedor Central (Letra y Lápiz) **********/}
+      {/* Metemos la letra y el lápiz aquí para que las coordenadas funcionen perfecto */}
       <View style={estilos.contenedorLetra}>
-      <Image
-        source={require('../../frontend/image/A_guia.png')}
-        style={estilos.letraGuia}
-      />
-      
-      <Animated.Image
-        source={require('../../frontend/image/lapiz.png')}
-        style={[
-          estilos.lapiz,
-          { 
-            transform: [ { translateX: moverX },  
-              { translateY: moverY }, { rotate: rotacionLapiz }] 
-          }
-        ]}
-      />
-</View>
+        
+        <Image
+          source={require('../../frontend/image/trazo_a.png')}
+          style={estilos.letraGuia}
+        />
+
+        <Animated.Image
+          source={require('../../frontend/image/lapiz.png')}
+          style={[
+            estilos.lapiz,
+            { 
+              transform: [
+                { translateX: moverX }, // Sigue el mapa en X
+                { translateY: moverY }, // Sigue el mapa en Y
+                { rotate: rotacionLapiz } // Sigue girando
+              ] 
+            }
+          ]}
+        />
+      </View>
+
+      {/********* Destellos **********/}
       <Animated.Image
         source={require('../../frontend/image/Destello.png')}
         style={[
@@ -210,7 +140,7 @@ if (mostrarTrazoI) {
           estilos.destello,
           {
             top: 300,
-            right:180,
+            right: 180,
             opacity: opacidadBrillo,
             transform: [{ scale: escalaBrillo }],
           },
@@ -230,19 +160,22 @@ if (mostrarTrazoI) {
         ]}
       />
 
+      {/********* Boton Derecha (Siguiente) **********/}
       <TouchableOpacity 
         style={estilos.botonDerecha}
-        onPress={() => setMostrarTrazoA(true)}
+        onPress={siguiente}
       >
         <Image 
           source={require('../../frontend/image/Derecha.png')} 
           style={estilos.flecha} 
         />
       </TouchableOpacity>
+
     </View>
   );
 };
 
+//******** ESTILOS **********
 const estilos = StyleSheet.create({
   container: {
     flex: 1,
@@ -257,16 +190,6 @@ const estilos = StyleSheet.create({
     transform: [{ translateY: -25 }],
     zIndex: 10,
   },
-  flecha: {
-    width: 60,
-    height: 60,
-    resizeMode: 'contain'
-  },
-  letraGuia: {
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-  },
   botonDerecha: {
     position: 'absolute',
     right: 10,
@@ -274,13 +197,31 @@ const estilos = StyleSheet.create({
     transform: [{ translateY: -25 }],
     zIndex: 10,
   },
+  flecha: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain'
+  },
+  contenedorLetra: {
+    width: 250,
+    height: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative' 
+  },
+  letraGuia: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
   lapiz: {
     position: 'absolute',
     width: 90,  
     height: 90,
-    top: -40,      
-    left: 30,    
+    top: 10,   
+    left: 75,  
     resizeMode: 'contain',
+    zIndex: 5,
   },
   destello: {
     position: 'absolute',
@@ -288,13 +229,6 @@ const estilos = StyleSheet.create({
     height: 50,
     resizeMode: 'contain',
   },
-  contenedorLetra: {
-    width: 250,
-    height: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
 });
 
-export default TrazosComponent;
+export default TrazoA;

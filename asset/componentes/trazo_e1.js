@@ -1,37 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Image, Animated } from "react-native";
-import TrazoAComponent from './trazo_a'; 
-import TrazoEComponent from './trazo_E';
-import TrazoE1Component from './trazo_e1';
-import TrazoIComponent from './trazo_I';
-import TrazoI1Component from './trazo_i1';
-import TrazoOComponent from './trazo_O';
-import TrazoO1Component from './trazo_o1';
-import TrazoUComponent from './trazo_U';
-import TrazoU1Component from './trazo_u1';
 
-
-
-const TrazosComponent = ({ regresar }) => {
-  const [mostrarTrazoA, setMostrarTrazoA] = useState(false);
-  const [mostrarTrazoE, setMostrarTrazoE] = useState(false);
-  const [mostrarTrazoE1, setMostrarTrazoE1] = useState(false);
-  const [mostrarTrazoI, setMostrarTrazoI] = useState(false);
-  const [mostrarTrazoI1, setMostrarTrazoI1] = useState(false);
-  const [mostrarTrazoO, setMostrarTrazoO] = useState(false);
-const [mostrarTrazoO1, setMostrarTrazoO1] = useState(false);
-const [mostrarTrazoU, setMostrarTrazoU] = useState(false);
-const [mostrarTrazoU1, setMostrarTrazoU1] = useState(false);
-
-
-
-
+const TrazoE1Component = ({ regresar, siguiente }) => {
+  
+  //******** Animaciones de Brillo y Giro **********
   const animBrilloRef = useRef(new Animated.Value(0));
   const animBrillo = animBrilloRef.current;
   
   const animLapizGiroRef = useRef(new Animated.Value(0));
   const animLapizGiro = animLapizGiroRef.current;
-
   const animProgresoTrazo = useRef(new Animated.Value(0)).current;
 
   const escalaBrillo = animBrillo.interpolate({
@@ -47,24 +24,24 @@ const [mostrarTrazoU1, setMostrarTrazoU1] = useState(false);
   const rotacionLapiz = animLapizGiro.interpolate({
     inputRange: [0, 1],
     outputRange: ['-15deg', '15deg'],
-  });
-const moverX = animProgresoTrazo.interpolate({
-    inputRange:  [0,  33,  34,  66,  67,  100], 
-    outputRange: [0, -30, +50, +80, -10, +60]
-  });
+  })
 
-  const moverY = animProgresoTrazo.interpolate({
-    inputRange:  [0,  33,  34,  66,  67,  100],
-    outputRange: [0, +180, 0, +180, +135, +135]
-  });
+const moverX = animProgresoTrazo.interpolate({
+  inputRange: [0, 15, 20, 25, 30, 35, 40, 50, 65, 80, 100],
+  outputRange: [0, 90, 85, 75, 60, 40, 0, -30, -20, 50, 100]
+});
+
+const moverY = animProgresoTrazo.interpolate({
+  inputRange: [0, 15, 20, 25, 30, 35, 40, 50, 65, 80, 100],
+  outputRange: [45, 45, 35, 20, 0, -30, -20, 50, 80, 100, 100]
+});
 
   useEffect(() => {
-
-animProgresoTrazo.setValue(0);
+    animProgresoTrazo.setValue(0);
 animBrillo.setValue(0);
 animLapizGiro.setValue(0);
 
-
+    //******** Animación de Brillo **********
     const animacionBrillo = Animated.loop(
       Animated.sequence([
         Animated.timing(animBrillo, { toValue: 1, duration: 1000, useNativeDriver: true }),
@@ -72,6 +49,7 @@ animLapizGiro.setValue(0);
       ])
     );
 
+    //******** Animación del Lápiz (Giro) **********
     const animacionLapiz = Animated.loop(
       Animated.sequence([
         Animated.timing(animLapizGiro, { toValue: 1, duration: 300, useNativeDriver: true }),
@@ -79,14 +57,15 @@ animLapizGiro.setValue(0);
       ])
     );
 
-     const animacionDibujo = Animated.loop(
+    //******** Animación del Trazo (Movimiento en la ruta) **********
+    const animacionDibujo = Animated.loop(
       Animated.sequence([
         Animated.timing(animProgresoTrazo, { 
           toValue: 100, 
-          duration: 6000,  
+          duration: 4500,  
           useNativeDriver: true 
         }),
-        Animated.delay(500), 
+        Animated.delay(500), // Pausa antes de reiniciar
         Animated.timing(animProgresoTrazo, { 
           toValue: 0, 
           duration: 0,  
@@ -94,6 +73,7 @@ animLapizGiro.setValue(0);
         })
       ])
     );
+
     animacionBrillo.start();
     animacionLapiz.start();
     animacionDibujo.start();
@@ -105,66 +85,10 @@ animLapizGiro.setValue(0);
     };
   }, []);
 
-  if (mostrarTrazoU1) {
-  return <TrazoU1Component 
-    regresar={() => setMostrarTrazoU1(false)}
-  />;
-}
-
-  if (mostrarTrazoU) {
-  return <TrazoUComponent 
-    regresar={() => setMostrarTrazoU(false)}
-    siguiente={() => setMostrarTrazoU1(true)} 
-
-  />;
-}
-
-  if (mostrarTrazoO1) {
-  return <TrazoO1Component 
-    regresar={() => setMostrarTrazoO1(false)}
- siguiente={() => setMostrarTrazoU(true)} 
-  />;
-}
-
- if (mostrarTrazoO) {
-  return <TrazoOComponent 
-    regresar={() => setMostrarTrazoO(false)}
-     siguiente={() => setMostrarTrazoO1(true)} 
-  />;
-}
-
-  if (mostrarTrazoI1) {
-  return <TrazoI1Component 
-    regresar={() => setMostrarTrazoI1(false)}
-    siguiente={() => setMostrarTrazoO(true)} 
-  />;
-}
-
-if (mostrarTrazoI) {
-    return <TrazoIComponent 
-        regresar={() => setMostrarTrazoI(false)}
-         siguiente={() => setMostrarTrazoI1(true)} />;
-
-}
-  if (mostrarTrazoE1) {
-    return <TrazoE1Component 
-        regresar={() => setMostrarTrazoE1(false)}
-        siguiente={() => setMostrarTrazoI(true)} />;
-  }
-
-  if (mostrarTrazoE) {
-    return <TrazoEComponent 
-    regresar={() => setMostrarTrazoE(false)}
-    siguiente={() => setMostrarTrazoE1(true)} />;
-  }
-  if (mostrarTrazoA) {
-    return <TrazoAComponent 
-    regresar={() => setMostrarTrazoA(false)}
-    siguiente={() => setMostrarTrazoE(true)}/>;
-  }
-
   return (
     <View style={estilos.container}>
+      
+      {/* Botón Izquierda (Regresar) */}
       <TouchableOpacity 
         style={estilos.botonFlecha}
         onPress={regresar}
@@ -174,23 +98,30 @@ if (mostrarTrazoI) {
           style={estilos.flecha} 
         />
       </TouchableOpacity>
+
       <View style={estilos.contenedorLetra}>
-      <Image
-        source={require('../../frontend/image/A_guia.png')}
-        style={estilos.letraGuia}
-      />
-      
-      <Animated.Image
-        source={require('../../frontend/image/lapiz.png')}
-        style={[
-          estilos.lapiz,
-          { 
-            transform: [ { translateX: moverX },  
-              { translateY: moverY }, { rotate: rotacionLapiz }] 
-          }
-        ]}
-      />
-</View>
+        
+        <Image
+          source={require('../../frontend/image/trazo_e.png')}
+          style={estilos.letraGuia}
+        />
+
+        <Animated.Image
+          source={require('../../frontend/image/lapiz.png')}
+          style={[
+            estilos.lapiz,
+            { 
+              transform: [
+                { translateX: moverX }, // Movimiento X relativo al contenedor
+                { translateY: moverY }, // Movimiento Y relativo al contenedor
+                { rotate: rotacionLapiz } // Giro oscilante
+              ] 
+            }
+          ]}
+        />
+      </View>
+
+      {/* Destellos decorativos */}
       <Animated.Image
         source={require('../../frontend/image/Destello.png')}
         style={[
@@ -210,7 +141,7 @@ if (mostrarTrazoI) {
           estilos.destello,
           {
             top: 300,
-            right:180,
+            right: 180,
             opacity: opacidadBrillo,
             transform: [{ scale: escalaBrillo }],
           },
@@ -230,15 +161,17 @@ if (mostrarTrazoI) {
         ]}
       />
 
+      {/* Botón Derecha (Siguiente) */}
       <TouchableOpacity 
         style={estilos.botonDerecha}
-        onPress={() => setMostrarTrazoA(true)}
+        onPress={siguiente}
       >
         <Image 
           source={require('../../frontend/image/Derecha.png')} 
           style={estilos.flecha} 
         />
       </TouchableOpacity>
+
     </View>
   );
 };
@@ -257,16 +190,6 @@ const estilos = StyleSheet.create({
     transform: [{ translateY: -25 }],
     zIndex: 10,
   },
-  flecha: {
-    width: 60,
-    height: 60,
-    resizeMode: 'contain'
-  },
-  letraGuia: {
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-  },
   botonDerecha: {
     position: 'absolute',
     right: 10,
@@ -274,27 +197,42 @@ const estilos = StyleSheet.create({
     transform: [{ translateY: -25 }],
     zIndex: 10,
   },
-  lapiz: {
-    position: 'absolute',
-    width: 90,  
-    height: 90,
-    top: -40,      
-    left: 30,    
+  flecha: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain'
+  },
+  
+  contenedorLetra: {
+    width: 250,
+    height: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative' 
+  },
+  
+  letraGuia: {
+    width: '100%',
+    height: '100%',
     resizeMode: 'contain',
   },
+  
+  lapiz: {
+    position: 'absolute',
+    width: 70,  
+    height: 70,
+    top: 30,    
+    left: 40, 
+    resizeMode: 'contain',
+    zIndex: 5,
+  },
+  
   destello: {
     position: 'absolute',
     width: 50,
     height: 50,
     resizeMode: 'contain',
   },
-  contenedorLetra: {
-    width: 250,
-    height: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
 });
 
-export default TrazosComponent;
+export default TrazoE1Component;

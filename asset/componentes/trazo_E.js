@@ -1,31 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Image, Animated } from "react-native";
-import TrazoAComponent from './trazo_a'; 
-import TrazoEComponent from './trazo_E';
-import TrazoE1Component from './trazo_e1';
-import TrazoIComponent from './trazo_I';
-import TrazoI1Component from './trazo_i1';
-import TrazoOComponent from './trazo_O';
-import TrazoO1Component from './trazo_o1';
-import TrazoUComponent from './trazo_U';
-import TrazoU1Component from './trazo_u1';
+import TrazoIComponent from './trazo_e1'; 
 
-
-
-const TrazosComponent = ({ regresar }) => {
-  const [mostrarTrazoA, setMostrarTrazoA] = useState(false);
-  const [mostrarTrazoE, setMostrarTrazoE] = useState(false);
-  const [mostrarTrazoE1, setMostrarTrazoE1] = useState(false);
-  const [mostrarTrazoI, setMostrarTrazoI] = useState(false);
-  const [mostrarTrazoI1, setMostrarTrazoI1] = useState(false);
-  const [mostrarTrazoO, setMostrarTrazoO] = useState(false);
-const [mostrarTrazoO1, setMostrarTrazoO1] = useState(false);
-const [mostrarTrazoU, setMostrarTrazoU] = useState(false);
-const [mostrarTrazoU1, setMostrarTrazoU1] = useState(false);
-
-
-
-
+const TrazoEComponent = ({ regresar ,siguiente}) => {
+  const [mostrarTrazoSiguiente, setMostrarTrazoSiguiente] = useState(false);
+  
   const animBrilloRef = useRef(new Animated.Value(0));
   const animBrillo = animBrilloRef.current;
   
@@ -48,22 +27,22 @@ const [mostrarTrazoU1, setMostrarTrazoU1] = useState(false);
     inputRange: [0, 1],
     outputRange: ['-15deg', '15deg'],
   });
-const moverX = animProgresoTrazo.interpolate({
-    inputRange:  [0,  33,  34,  66,  67,  100], 
-    outputRange: [0, -30, +50, +80, -10, +60]
+
+  const moverX = animProgresoTrazo.interpolate({
+    inputRange:  [0,  25,  26,  50,  51,  75,  76, 100], 
+    outputRange: [0,   0,   0,  +95, +15, +85, +15, +105] 
   });
 
   const moverY = animProgresoTrazo.interpolate({
-    inputRange:  [0,  33,  34,  66,  67,  100],
-    outputRange: [0, +180, 0, +180, +135, +135]
+    inputRange:  [0,  25,  26,  50,  51,  75,  76, 100],
+    outputRange: [0, +205,   0,    0, +90, +90, +190, +190] 
   });
 
-  useEffect(() => {
 
-animProgresoTrazo.setValue(0);
+  useEffect(() => {
+    animProgresoTrazo.setValue(0);
 animBrillo.setValue(0);
 animLapizGiro.setValue(0);
-
 
     const animacionBrillo = Animated.loop(
       Animated.sequence([
@@ -79,14 +58,14 @@ animLapizGiro.setValue(0);
       ])
     );
 
-     const animacionDibujo = Animated.loop(
+    const animacionDibujo = Animated.loop(
       Animated.sequence([
         Animated.timing(animProgresoTrazo, { 
           toValue: 100, 
-          duration: 6000,  
+          duration: 5000, 
           useNativeDriver: true 
         }),
-        Animated.delay(500), 
+        Animated.delay(800), 
         Animated.timing(animProgresoTrazo, { 
           toValue: 0, 
           duration: 0,  
@@ -94,6 +73,7 @@ animLapizGiro.setValue(0);
         })
       ])
     );
+
     animacionBrillo.start();
     animacionLapiz.start();
     animacionDibujo.start();
@@ -105,62 +85,8 @@ animLapizGiro.setValue(0);
     };
   }, []);
 
-  if (mostrarTrazoU1) {
-  return <TrazoU1Component 
-    regresar={() => setMostrarTrazoU1(false)}
-  />;
-}
-
-  if (mostrarTrazoU) {
-  return <TrazoUComponent 
-    regresar={() => setMostrarTrazoU(false)}
-    siguiente={() => setMostrarTrazoU1(true)} 
-
-  />;
-}
-
-  if (mostrarTrazoO1) {
-  return <TrazoO1Component 
-    regresar={() => setMostrarTrazoO1(false)}
- siguiente={() => setMostrarTrazoU(true)} 
-  />;
-}
-
- if (mostrarTrazoO) {
-  return <TrazoOComponent 
-    regresar={() => setMostrarTrazoO(false)}
-     siguiente={() => setMostrarTrazoO1(true)} 
-  />;
-}
-
-  if (mostrarTrazoI1) {
-  return <TrazoI1Component 
-    regresar={() => setMostrarTrazoI1(false)}
-    siguiente={() => setMostrarTrazoO(true)} 
-  />;
-}
-
-if (mostrarTrazoI) {
-    return <TrazoIComponent 
-        regresar={() => setMostrarTrazoI(false)}
-         siguiente={() => setMostrarTrazoI1(true)} />;
-
-}
-  if (mostrarTrazoE1) {
-    return <TrazoE1Component 
-        regresar={() => setMostrarTrazoE1(false)}
-        siguiente={() => setMostrarTrazoI(true)} />;
-  }
-
-  if (mostrarTrazoE) {
-    return <TrazoEComponent 
-    regresar={() => setMostrarTrazoE(false)}
-    siguiente={() => setMostrarTrazoE1(true)} />;
-  }
-  if (mostrarTrazoA) {
-    return <TrazoAComponent 
-    regresar={() => setMostrarTrazoA(false)}
-    siguiente={() => setMostrarTrazoE(true)}/>;
+  if (mostrarTrazoSiguiente) {
+    return <TrazoIComponent regresar={() => setMostrarTrazoSiguiente(false)} />;
   }
 
   return (
@@ -176,7 +102,7 @@ if (mostrarTrazoI) {
       </TouchableOpacity>
       <View style={estilos.contenedorLetra}>
       <Image
-        source={require('../../frontend/image/A_guia.png')}
+        source={require('../../frontend/image/E_guia.png')}
         style={estilos.letraGuia}
       />
       
@@ -185,12 +111,15 @@ if (mostrarTrazoI) {
         style={[
           estilos.lapiz,
           { 
-            transform: [ { translateX: moverX },  
-              { translateY: moverY }, { rotate: rotacionLapiz }] 
+            transform: [
+              { translateX: moverX },
+              { translateY: moverY },
+              { rotate: rotacionLapiz }
+            ] 
           }
         ]}
       />
-</View>
+      </View>
       <Animated.Image
         source={require('../../frontend/image/Destello.png')}
         style={[
@@ -210,7 +139,7 @@ if (mostrarTrazoI) {
           estilos.destello,
           {
             top: 300,
-            right:180,
+            right: 180,
             opacity: opacidadBrillo,
             transform: [{ scale: escalaBrillo }],
           },
@@ -232,7 +161,7 @@ if (mostrarTrazoI) {
 
       <TouchableOpacity 
         style={estilos.botonDerecha}
-        onPress={() => setMostrarTrazoA(true)}
+       onPress={siguiente}
       >
         <Image 
           source={require('../../frontend/image/Derecha.png')} 
@@ -263,8 +192,8 @@ const estilos = StyleSheet.create({
     resizeMode: 'contain'
   },
   letraGuia: {
-    width: 250,
-    height: 250,
+    width: '100%',
+    height: '100%',
     resizeMode: 'contain',
   },
   botonDerecha: {
@@ -274,20 +203,7 @@ const estilos = StyleSheet.create({
     transform: [{ translateY: -25 }],
     zIndex: 10,
   },
-  lapiz: {
-    position: 'absolute',
-    width: 90,  
-    height: 90,
-    top: -40,      
-    left: 30,    
-    resizeMode: 'contain',
-  },
-  destello: {
-    position: 'absolute',
-    width: 50,
-    height: 50,
-    resizeMode: 'contain',
-  },
+  
   contenedorLetra: {
     width: 250,
     height: 250,
@@ -295,6 +211,22 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
+  
+  lapiz: {
+    position: 'absolute',
+    width: 70,
+    height: 70,
+    top: -10,    
+    left: 40,   
+    resizeMode: 'contain',
+    zIndex: 10, 
+  },
+  destello: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+  },
 });
 
-export default TrazosComponent;
+export default TrazoEComponent;

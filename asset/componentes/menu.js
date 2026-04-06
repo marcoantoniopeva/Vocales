@@ -41,6 +41,13 @@ const moverMano = animMano.interpolate({
 });
 
   useEffect(() => {
+   animVibrar.setValue(0);
+  animNota1.setValue(0);
+  animNota2.setValue(0);
+  animBrillo.setValue(0);
+  animGiro.setValue(0);
+  animMano.setValue(0);
+
   Animated.sequence([
     Animated.timing(animVibrar, { toValue: 5, duration: 100, useNativeDriver: true }),
     Animated.timing(animVibrar, { toValue: -5, duration: 100, useNativeDriver: true }),
@@ -115,7 +122,7 @@ Animated.loop(
     Animated.delay(800),
   ])
 ).start();
-  }, []);
+  }, [pantalla]);
 
    if (pantalla === 'audio') {
     return <AudioComponent regresar={() => setPantalla('menu')} />;
@@ -175,7 +182,7 @@ Animated.loop(
         <Animated.View style={[estilos.contPlay, estilos.circulo,{ transform: [{ translateX: animVibrar}] }]}>
           <TouchableOpacity
             style={estilos.touchable}
-             onPress={() => setPantalla('trazos')}> 
+             onPress={() => setPantalla('unir')}> 
             <Image
               source={require('../../frontend/image/Ojo.png')}
               style={estilos.img} 
@@ -221,7 +228,7 @@ Animated.loop(
         <Animated.View style={[estilos.contPlay,estilos.circulo, { transform: [{ translateX: animVibrar }] }]}>
           <TouchableOpacity
             style={estilos.touchable}
-           onPress={() => setPantalla('unir')}> 
+           onPress={() => setPantalla('trazos')}> 
             <Image
               source={require('../../frontend/image/Mano.png')}
               style={estilos.img}
@@ -236,6 +243,7 @@ Animated.loop(
        justifyContent: 'center', 
       alignItems: 'center',   
       transform: [{ rotate: rotacion }],
+      pointerEvents: 'none'
     }}
   >
     <Image

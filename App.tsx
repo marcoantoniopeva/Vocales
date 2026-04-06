@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-<<<<<<< HEAD
-import { View, StyleSheet, Image, TouchableOpacity, Animated } from "react-native";
-=======
-import { View, StyleSheet, Image, TouchableOpacity, Animated,Easing } from "react-native";
->>>>>>> d2f58b231f4207b54143c1e48582a61e949139d8
+import { View, StyleSheet, Image, TouchableOpacity, Animated ,Easing } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import Menu from './asset/componentes/menu';
 
@@ -47,10 +43,7 @@ const Inicio = ({ irAMenu }) => {
         })
       ])
     ).start();
-
-<<<<<<< HEAD
-=======
-    // ********animacion del Avion***********
+     // ********animacion del Avion***********
     Animated.loop(
       Animated.sequence([
         Animated.timing(animacionAvion, { toValue: 1, duration: 3000, easing: Easing.linear, useNativeDriver: true }),
@@ -89,7 +82,6 @@ const Inicio = ({ irAMenu }) => {
     ).start();
   }, []);
 
->>>>>>> d2f58b231f4207b54143c1e48582a61e949139d8
   // LETRA A 
   const translateY_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: [200, 0] });
   const rotate_A = animacionA.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '-60deg'] });
@@ -140,17 +132,13 @@ const Inicio = ({ irAMenu }) => {
     outputRange: ['-10deg', '10deg'] 
   });
 
-
   return (
-    <View style={estilos.contPrin}>
+     <View style={estilos.contPrin}>
       <View style={estilos.contVoc}>
         
-        <Animated.Image source={require('./frontend/image/A.png')} style={[ estilos.vocBase, estilos.posA, { opacity: opacity_A, transform: [{ translateY: translateY_A }, { rotate: rotate_A }] } ]} />
-<<<<<<< HEAD
+    <Animated.Image source={require('./frontend/image/A.png')} style={[ estilos.vocBase, estilos.posA, { opacity: opacity_A, transform: [{ translateY: translateY_A }, { rotate: rotate_A }] } ]} />
         <Animated.Image source={require('./frontend/image/E.png')} style={[ estilos.vocBase, estilos.posicionE, { opacity: opacity_E, transform: [{ translateY: translateY_E }, { rotate: rotate_E }] } ]} />
         <Animated.Image source={require('./frontend/image/I1.png')} style={[ estilos.vocBase, estilos.posicionI, { opacity: opacity_I, transform: [{ translateY: translateY_I }, { rotate: rotate_I }] } ]} />
-      
-=======
         <Animated.Image source={require('./frontend/image/Avion.png')} style={[ estilos.objBase, estilos.posAvion, { transform: [{ translateX: translateX_Avion }] } ]} />
 
         <Animated.Image source={require('./frontend/image/E.png')} style={[ estilos.vocBase, estilos.posicionE, { opacity: opacity_E, transform: [{ translateY: translateY_E }, { rotate: rotate_E }] } ]} />
@@ -159,7 +147,6 @@ const Inicio = ({ irAMenu }) => {
         <Animated.Image source={require('./frontend/image/I1.png')} style={[ estilos.vocBase, estilos.posicionI, { opacity: opacity_I, transform: [{ translateY: translateY_I }, { rotate: rotate_I }] } ]} />
         <Animated.Image source={require('./frontend/image/Iglu.png')} style={[ estilos.objBase, estilos.posicionIglu, { transform: [{ translateY: translateY_Iglu }] } ]} />
 
->>>>>>> d2f58b231f4207b54143c1e48582a61e949139d8
         <Animated.View style={[estilos.contPlay, estilos.Play, { transform: [{ scale: latidoPlay }] }]}>
           <TouchableOpacity
             style={{ width: '100%', height: '100%' }}
@@ -172,15 +159,12 @@ const Inicio = ({ irAMenu }) => {
         </Animated.View>
 
         <Animated.Image source={require('./frontend/image/O.png')} style={[ estilos.vocBase, estilos.posicionO, { opacity: opacity_O, transform: [{ translateY: translateY_O }, { rotate: rotate_O }] } ]} />
-<<<<<<< HEAD
+
         <Animated.Image source={require('./frontend/image/U.png')} style={[ estilos.vocBase, estilos.posicionU, { opacity: opacity_U, transform: [{ translateY: translateY_U }, { rotate: rotate_U }] } ]} />
-=======
         <Animated.Image source={require('./frontend/image/Cara_Oso1.png')} style={[ estilos.objBase, estilos.posicionCara_Oso, { transform: [{ rotate: rotate_CaraOso }] } ]} />
 
         <Animated.Image source={require('./frontend/image/U.png')} style={[ estilos.vocBase, estilos.posicionU, { opacity: opacity_U, transform: [{ translateY: translateY_U }, { rotate: rotate_U }] } ]} />
         <Animated.Image source={require('./frontend/image/Uvas.png')} style={[ estilos.objBase, estilos.posicionUvas, { transform: [{ scale: animacionUvas }] } ]} />
->>>>>>> d2f58b231f4207b54143c1e48582a61e949139d8
-
       </View>
     </View>
   );
@@ -191,7 +175,7 @@ export default function App() {
 
   if (pantallaActual === 'Menu') {
     return (
-      <Menu /> 
+    <Menu irAInicio={() => setPantallaActual('Inicio')} />
     );
   }
 
@@ -203,33 +187,22 @@ export default function App() {
 const estilos = StyleSheet.create({
   contPrin: {
     flex: 1,
-<<<<<<< HEAD
     backgroundColor: '#f1c9f5',
   },
   contVoc: {
     flex: 1,
     backgroundColor: '#f1c9f5',
-=======
-    backgroundColor: '#ee12d150',
-  },
-  contVoc: {
-    flex: 1,
-    backgroundColor: 'transparent',
->>>>>>> d2f58b231f4207b54143c1e48582a61e949139d8
     position: 'relative'
   },
   vocBase: {
     width: scale(65),
     height: verticalScale(65),
-<<<<<<< HEAD
-=======
     resizeMode: 'contain',
     position: 'absolute'
   },
-  objBase: {
+   objBase: {
     width: scale(60),
     height: verticalScale(60),
->>>>>>> d2f58b231f4207b54143c1e48582a61e949139d8
     resizeMode: 'contain',
     position: 'absolute'
   },
